@@ -1,0 +1,1457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>HydraScaner · Ultimate 20‑Feature Edition | iAmINRaZ</title>
+    <style>
+        /* ========== BASE STYLES ========== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            transition: all 0.2s ease;
+        }
+
+        :root {
+            --bg-gradient: linear-gradient(145deg, #0b1120 0%, #111827 100%);
+            --card-bg: rgba(18, 25, 45, 0.75);
+            --card-border: rgba(56, 189, 248, 0.2);
+            --text-primary: #f0f3fa;
+            --text-secondary: #9ca3af;
+            --accent: #2dd4bf;
+            --accent-glow: #0d9488;
+            --danger: #f43f5e;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --table-header: #1e293b;
+            --hover-row: rgba(45, 212, 191, 0.1);
+        }
+
+        body.light {
+            --bg-gradient: linear-gradient(145deg, #e2e8f0 0%, #f1f5f9 100%);
+            --card-bg: rgba(255, 255, 255, 0.85);
+            --card-border: rgba(15, 23, 42, 0.1);
+            --text-primary: #0f172a;
+            --text-secondary: #334155;
+            --table-header: #f1f5f9;
+            --hover-row: rgba(15, 23, 42, 0.05);
+        }
+
+        body {
+            background: var(--bg-gradient);
+            color: var(--text-primary);
+            font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+            padding: 1.5rem;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1800px;
+            margin: 0 auto;
+        }
+
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--card-border);
+            border-radius: 2rem;
+            margin-bottom: 2rem;
+            overflow: hidden;
+            box-shadow: 0 25px 45px -12px rgba(0,0,0,0.3);
+        }
+
+        .card-header {
+            padding: 1.2rem 1.8rem;
+            border-bottom: 1px solid var(--card-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-weight: 700;
+            font-size: 1.2rem;
+            background: rgba(0,0,0,0.2);
+        }
+
+        .card-body {
+            padding: 1.8rem;
+        }
+
+        button, .btn {
+            background: var(--accent);
+            color: #0f172a;
+            border: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: 0.2s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        button:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.05);
+            box-shadow: 0 8px 15px rgba(45,212,191,0.3);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+        }
+
+        textarea, input, select {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--card-border);
+            border-radius: 1rem;
+            padding: 0.7rem 1rem;
+            color: var(--text-primary);
+            font-size: 0.9rem;
+            font-family: 'JetBrains Mono', monospace;
+            width: 100%;
+            resize: vertical;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.7rem;
+        }
+
+        th, td {
+            padding: 0.5rem 0.2rem;
+            text-align: left;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        th {
+            background: var(--table-header);
+            font-weight: 600;
+            color: var(--accent);
+        }
+
+        tr:hover td {
+            background: var(--hover-row);
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 0.2rem 0.6rem;
+            border-radius: 2rem;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+        .badge-success { background: #10b981; color: white; }
+        .badge-warn { background: #f59e0b; color: black; }
+        .badge-info { background: #2dd4bf; color: #0f172a; }
+
+        .progress-bar {
+            height: 6px;
+            background: #2d3748;
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 1rem 0;
+        }
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+            background: var(--accent);
+            transition: width 0.2s;
+        }
+        .flex-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+        }
+        footer {
+            text-align: center;
+            margin-top: 2rem;
+            opacity: 0.7;
+            font-size: 0.8rem;
+        }
+        .toggle-switch {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+        .sparkline {
+            font-family: monospace;
+            font-size: 0.7rem;
+            letter-spacing: 1px;
+        }
+        .war-room-row {
+            display: flex;
+            gap: 1rem;
+            justify-content: space-between;
+            background: rgba(0,0,0,0.3);
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+        }
+        .war-room-item {
+            flex: 1;
+            text-align: center;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- Branding -->
+    <div style="display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 1rem;">
+        <div>
+            <h1 style="font-size: 2rem; background: linear-gradient(135deg, #2dd4bf, #3b82f6); -webkit-background-clip: text; background-clip: text; color: transparent;">🐉 HydraScaner</h1>
+            <p style="color: var(--text-secondary);">by <strong>iAmINRaZ</strong> — The Ultimate Scaner</p>
+        </div>
+        <button id="themeToggleBtn" class="btn-outline">🌓 Light/Dark</button>
+    </div>
+
+    <!-- Scanner Card -->
+    <div class="card">
+        <div class="card-header">
+            <span class="icon-text">⚡ Smart Scanner Engine - 2500 pairs max</span>
+            <span id="scanStatusBadge" class="badge badge-info">Idle</span>
+        </div>
+        <div class="card-body">
+            <div style="display: flex; flex-wrap: wrap; gap: 1.5rem;">
+                <div style="flex: 1;">
+                    <label>🌐 IP addresses (any delimiter)</label>
+                    <textarea id="ipInput" rows="4" placeholder="2.17.251.98
+2.20.255.113/2.21.239.21
+23.2.13.152 104.66.70.133"></textarea>
+                    <small>Auto‑extract IPv4: newline, comma, space, slash</small>
+                </div>
+                <div style="flex: 1;">
+                    <label>🏷️ SNI / Domains (any delimiter)</label>
+                    <textarea id="sniInput" rows="4" placeholder="snapp.ir
+varzesh3.com, digikala.com
+cloudflare.com/akamai.com"></textarea>
+                    <small>If empty, each IP will be tested with itself as SNI + generic fallbacks</small>
+                </div>
+            </div>
+            <div class="flex-row" style="margin: 1rem 0;">
+                <button id="startScanBtn">▶ START MASS SCAN</button>
+                <button id="pingOnlyBtn" class="btn-outline">📡 PING (Direct only)</button>
+                <button id="pairOnlyBtn" class="btn-outline">🔄 PAIR (IP×SNI only)</button>
+                <button id="advancedPingBtn" class="btn-outline">🔧 ADVANCED PING (20 features)</button>
+                <button id="pauseScanBtn">⏸ Pause</button>
+                <button id="stopScanBtn">⏹ Stop</button>
+                <div class="toggle-switch" id="showAliveToggle" style="background: var(--card-border); padding: 5px 12px; border-radius: 40px;">
+                    <span>✅ Show only alive</span>
+                    <input type="checkbox" id="aliveOnlyCheckbox" checked style="width: 18px; margin:0;">
+                </div>
+            </div>
+            <div class="progress-bar"><div id="scanProgressFill" class="progress-fill"></div></div>
+            <div id="scanStats" style="font-size: 0.8rem; display: flex; gap: 20px; flex-wrap: wrap;"></div>
+            <div class="flex-row" style="margin-top: 1rem;">
+                <button id="exportCsvBtn">📎 CSV</button>
+                <button id="exportTxtBtn">📄 TXT</button>
+                <button id="exportJsonBtn">📦 JSON</button>
+                <button id="exportClashBtn">☁️ Clash</button>
+                <button id="exportSingboxBtn">📤 Sing-Box</button>
+                <button id="exportV2rayNBtn">📲 V2RayN</button>
+                <button id="copyAliveIpsBtn" class="btn-outline">📋 Copy IPs</button>
+                <button id="copyAliveSnisBtn" class="btn-outline">📋 Copy SNIs</button>
+                <input type="text" id="filterInput" placeholder="🔍 Filter" style="width: 150px;">
+                <button id="portBlacklistBtn" class="btn-outline">⚙️ Port blacklist</button>
+                <button id="stealthModeBtn" class="btn-outline">🕵️ Stealth mode</button>
+                <button id="asymmetricBtn" class="btn-outline">⚡ Asymmetric scan</button>
+            </div>
+            <div class="flex-row" style="margin-top: 8px;">
+                <button id="speedTestBtn" class="btn-outline">🚀 Speed Test</button>
+                <button id="enrichBtn" class="btn-outline">🔍 Enrich (ISP/ASN/Real)</button>
+                <button id="rawPingBtn" class="btn-outline">📡 Re‑measure Raw Pings</button>
+                <span style="font-size:0.7rem;">⚡ TCP/HTTP pings measured automatically after scan.</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Table – extended columns for 20 features -->
+    <div class="card">
+        <div class="card-header">
+            <span>📊 Advanced Results — IP · SNI · Port · TLS · HTTP · TCP · UDP· Mbps · Spark · AlivePorts · CDN · ISP · ASN · Engine · Spoof · Real · IR · Action</span>
+            <span id="resultCountSpan">0 entries</span>
+        </div>
+        <div class="card-body" style="overflow-x: auto;">
+            <table id="resultsTable" style="min-width: 1800px;">
+                <thead>
+                    <tr>
+                        <th>IP</th><th>SNI</th><th>Port</th><th>TLS(ms)</th><th>HTTP(ms)</th><th>TCP(ms)</th><th>UDP(ms)</th>
+                        <th>Mbps</th><th>Spark</th><th>Ports</th><th>CDN</th><th>ISP</th><th>ASN</th><th>Engine</th><th>Spoof</th><th>Real</th><th>IR</th><th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="resultsTbody"><tr><td colspan="18">Ready — click START or ADVANCED PING</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Config Editor & Optimizer (Accordion) -->
+    <div class="card">
+        <div class="card-header" id="configAccordionHeader" style="cursor:pointer; display: flex; justify-content: space-between;">
+            <span>🔐 Config Editor + LB/Failover Builder + Injector + War Room</span>
+            <span>▼</span>
+        </div>
+        <div id="configAccordionContent" style="max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out;">
+            <div class="card-body">
+                <textarea id="rawConfigsInput" rows="4" placeholder="vless://example.com:443?security=tls&sni=cloudflare.com&#10;vmess://eyJhZGQiOiJjZi1zZy5leGFtcGxlLmNvbSIsInBvcnQiOjQ0Mywic25pIjoiY2xvdWRmbGFyZS5jb20ifQ=="></textarea>
+                <div class="flex-row" style="margin: 1rem 0;">
+                    <button id="extractConfigBtn">🔍 Extract</button>
+                    <button id="optimizeConfigsBtn">🔄 Match & Optimize</button>
+                    <button id="buildLbConfigBtn" class="btn-outline">✨ Build LB/Failover</button>
+                    <button id="copyAllOptimizedBtn">📋 Copy All</button>
+                    <button id="configInjectorBtn" class="btn-outline">💉 Config Injector (upgrade)</button>
+                    <button id="warRoomBtn" class="btn-outline">⚔️ Config War Room</button>
+                    <button id="backupGistBtn" class="btn-outline">☁️ Backup to Gist</button>
+                    <button id="restoreGistBtn" class="btn-outline">📥 Restore from Gist</button>
+                    <button id="naturalLanguageBtn" class="btn-outline">🧠 AI Config Builder</button>
+                </div>
+                <div id="configPreview"></div>
+                <div id="optimizedResults"></div>
+                <div id="warRoomPanel" style="display:none; margin-top:1rem; background:rgba(0,0,0,0.3); padding:1rem; border-radius:1rem;"></div>
+            </div>
+        </div>
+    </div>
+    <footer>🐉 HydraScaner · iAmINRaZ · The Ultimate Scaner</footer>
+</div>
+<script>
+    // ========== CORE CONSTANTS (from your base) ==========
+    const DEFAULT_PORTS = [80, 443, 8080, 8443, 2052, 2053, 2082, 2083, 2086, 2087, 2095, 2096, 8443, 8880, 9443, 4443, 10443, 3000, 8000, 8444, 8081, 8082, 8088, 8888, 4430, 2097, 2053, 2082, 2086, 2087, 2095, 2096, 8880, 4643, 5342, 6543, 9876];
+    const FALLBACK_SNIS = [
+        "cloudflare.com", "google.com", "akamai.com", "fastly.com",
+        "arvancloud.com", "derak.cloud", "parspack.com", "iran.ir",
+        "aparat.com", "digikala.com", "snapp.ir", "telewebion.com",
+        "varzesh3.com", "bmi.ir", "irancell.ir", "mci.ir",
+        "sibche.com", "divar.ir", "torob.com", "alibaba.ir",
+        "sheypoor.com", "jobvision.ir", "ghasedak24.com", "zoomg.ir"
+    ];
+    const PING_RETRIES = 5;
+
+    let scanActive = false, scanPaused = false, scanStop = false;
+    let taskQueue = [];
+    let currentTaskIndex = 0;
+    let resultsMaster = [];
+    let rawAllResults = [];
+    let runningTasks = 0;
+    let concurrency = 100;
+    let renderTimeout = null;
+
+    function extractIPs(raw) {
+        const regex = /\b(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b/g;
+        let matches = raw.match(regex) || [];
+        return [...new Set(matches)];
+    }
+    function extractSNIs(raw) {
+        if (!raw.trim()) return [];
+        let parts = raw.split(/[\n, \/]+/).map(s => s.trim()).filter(s => s && !s.match(/^\d+$/));
+        return [...new Set(parts)];
+    }
+
+async function testSingle(ip, sni, port, timeout = 2000) {
+    if (stealthEnabled) {
+        // Random delay 100-500ms
+        await new Promise(r => setTimeout(r, Math.random() * 400 + 100));
+        // Send dummy requests to Iranian sites to mix traffic
+        fetch('https://aparat.com/favicon.ico', { mode: 'no-cors' }).catch(()=>{});
+        fetch('https://digikala.com/favicon.ico', { mode: 'no-cors' }).catch(()=>{});
+    }
+    const url = `https://${ip}:${port}/`;
+    const controller = new AbortController();
+    const tid = setTimeout(() => controller.abort(), timeout);
+    const start = performance.now();
+    try {
+        await fetch(url, { method: 'HEAD', mode: 'no-cors', signal: controller.signal });
+        const latency = Math.round(performance.now() - start);
+        clearTimeout(tid);
+        return { success: true, latency };
+    } catch (err) {
+        clearTimeout(tid);
+        return { success: false, latency: -1 };
+    }
+}
+
+async function testPortsForPair(ip, sni, ports) {
+    const filteredPorts = applyPortFilter(ports);  // apply blacklist/whitelist
+    const results = await Promise.all(filteredPorts.map(port => testSingle(ip, sni, port)));
+    const alive = results.map((res, idx) => ({ port: filteredPorts[idx], latency: res.latency, ok: res.success })).filter(r => r.ok);
+    if (alive.length === 0) return null;
+    const best = alive.reduce((a,b) => (a.latency < b.latency ? a : b));
+    return {
+        bestPort: best.port,
+        bestLatency: best.latency,
+        alivePortsCount: alive.length,
+        portsDetail: alive.map(p=>`${p.port}(${p.latency}ms)`).join(', '),
+        performance: best.latency < 100 ? "🔥 LOW" : (best.latency < 300 ? "📊 MED" : "🐢 HIGH"),
+    };
+}
+
+    async function measureTcpPing(ip, port = 80, timeout = 2000) {
+        return new Promise((resolve) => {
+            const ws = new WebSocket(`ws://${ip}:${port}`);
+            const start = performance.now();
+            let resolved = false;
+            const timer = setTimeout(() => {
+                if (!resolved) {
+                    ws.close();
+                    resolve(null);
+                }
+            }, timeout);
+            ws.onopen = () => {
+                const latency = Math.round(performance.now() - start);
+                clearTimeout(timer);
+                resolved = true;
+                ws.close();
+                resolve(latency);
+            };
+            ws.onerror = () => {
+                if (!resolved) {
+                    clearTimeout(timer);
+                    resolved = true;
+                    resolve(null);
+                }
+            };
+        });
+    }
+
+    async function pingWithRetries(testFunc, target, timeout = 2000, retries = PING_RETRIES) {
+        let successCount = 0;
+        let totalLatency = 0;
+        let minLatency = Infinity;
+        for (let i = 0; i < retries; i++) {
+            const result = await testFunc(target, timeout);
+            if (result.success) {
+                successCount++;
+                totalLatency += result.latency;
+                if (result.latency < minLatency) minLatency = result.latency;
+            }
+            if (i < retries - 1) await new Promise(r => setTimeout(r, 50));
+        }
+        if (successCount === 0) return { success: false, latency: -1 };
+        return { success: true, latency: minLatency };
+    }
+
+    async function pingDomainSingle(sni, timeout = 2000) {
+        const protocols = [`https://${sni}/`, `http://${sni}/`];
+        for (const url of protocols) {
+            const controller = new AbortController();
+            const tid = setTimeout(() => controller.abort(), timeout);
+            const start = performance.now();
+            try {
+                await fetch(url, { method: 'GET', mode: 'cors', signal: controller.signal });
+                const latency = Math.round(performance.now() - start);
+                clearTimeout(tid);
+                return { success: true, latency };
+            } catch (err) {
+                clearTimeout(tid);
+            }
+        }
+        return { success: false, latency: -1 };
+    }
+
+    async function pingDomain(sni, timeout = 2000) {
+        return await pingWithRetries(pingDomainSingle, sni, timeout);
+    }
+
+    async function pingIPSingle(ip, timeout = 2000) {
+        const urls = [`https://${ip}/`, `http://${ip}/`];
+        for (const url of urls) {
+            const controller = new AbortController();
+            const tid = setTimeout(() => controller.abort(), timeout);
+            const start = performance.now();
+            try {
+                await fetch(url, { method: 'GET', mode: 'cors', signal: controller.signal });
+                const latency = Math.round(performance.now() - start);
+                clearTimeout(tid);
+                return { success: true, latency };
+            } catch(e) { clearTimeout(tid); continue; }
+        }
+        return { success: false, latency: -1 };
+    }
+
+    async function pingIP(ip, timeout = 2000) {
+        return await pingWithRetries(pingIPSingle, ip, timeout);
+    }
+
+    async function tcpPingWithRetries(ip, port = 80, timeout = 2000, retries = PING_RETRIES) {
+        let minLatency = Infinity;
+        for (let i = 0; i < retries; i++) {
+            const latency = await measureTcpPing(ip, port, timeout);
+            if (latency !== null && latency < minLatency) minLatency = latency;
+            if (i < retries - 1) await new Promise(r => setTimeout(r, 50));
+        }
+        return minLatency !== Infinity ? minLatency : null;
+    }
+
+    function detectCDN(ip) {
+        if (ip.startsWith("104.16.") || ip.startsWith("104.17.") || ip.startsWith("104.18.") || ip.match(/^172\.64\./)) return "CF";
+        if (ip.startsWith("23.32.") || ip.startsWith("23.52.") || ip.startsWith("23.62.")) return "Akamai";
+        if (ip.startsWith("205.251.") || ip.startsWith("54.239.") || ip.startsWith("13.32.")) return "AWS";
+        if (ip.startsWith("151.101.")) return "Fastly";
+        return "—";
+    }
+
+    function isIranianIP(ip) {
+        const parts = ip.split('.').map(Number);
+        if (parts.length !== 4) return false;
+        const first = parts[0], second = parts[1];
+        if (first === 31 && second >= 24 && second <= 31) return true;
+        if (first === 37 && second >= 98) return true;
+        if (first === 46 && second >= 100) return true;
+        if (first === 78 && (second === 38 || second === 39)) return true;
+        if (first === 80 && second >= 191) return true;
+        if (first === 81 && second >= 12 && second <= 91) return true;
+        if (first === 85 && second >= 9 && second <= 15) return true;
+        if (first === 89 && second >= 144 && second <= 165) return true;
+        if (first === 91 && second >= 98) return true;
+        if (first === 94 && second >= 182 && second <= 184) return true;
+        if (first === 95 && second >= 81 && second <= 162) return true;
+        if (first === 185 && second >= 180) return true;
+        if (first === 193 && second >= 176 && second <= 191) return true;
+        if (first === 194 && second >= 60) return true;
+        if (first === 195 && second >= 146 && second <= 191) return true;
+        return false;
+    }
+
+    const ispCache = new Map();
+    async function enrichISP(ip) {
+        if (ispCache.has(ip)) return ispCache.get(ip);
+        try {
+            const res = await fetch(`https://ip-api.com/json/${ip}?fields=isp,as`);
+            const data = await res.json();
+            const result = { isp: data.isp?.substring(0,12) || "—", asn: data.as ? data.as.split(" ")[0] : "—" };
+            ispCache.set(ip, result);
+            return result;
+        } catch(e) {
+            return { isp: "—", asn: "—" };
+        }
+    }
+
+    async function testReality(ip, port, originalSni) {
+        const fakeSni = "fake.doesnotexist.com";
+        const url = `https://${ip}:${port}/`;
+        const controller = new AbortController();
+        const tid = setTimeout(() => controller.abort(), 2000);
+        try {
+            await fetch(url, { method: 'HEAD', mode: 'no-cors', headers: { 'Host': fakeSni }, signal: controller.signal });
+            clearTimeout(tid);
+            return true;
+        } catch(e) {
+            clearTimeout(tid);
+            return false;
+        }
+    }
+
+    async function measureTcpPingAuto(ip, port = 80, timeout = 3000) {
+        return new Promise((resolve) => {
+            const ws = new WebSocket(`ws://${ip}:${port}`);
+            const start = performance.now();
+            let resolved = false;
+            const timer = setTimeout(() => {
+                if (!resolved) {
+                    ws.close();
+                    resolve(null);
+                }
+            }, timeout);
+            ws.onopen = () => {
+                const latency = Math.round(performance.now() - start);
+                clearTimeout(timer);
+                resolved = true;
+                ws.close();
+                resolve(latency);
+            };
+            ws.onerror = () => {
+                if (!resolved) {
+                    clearTimeout(timer);
+                    resolved = true;
+                    resolve(null);
+                }
+            };
+        });
+    }
+
+    async function measureHttpPingAuto(ipOrDomain, timeout = 3000) {
+        const url = `http://${ipOrDomain}/`;
+        const controller = new AbortController();
+        const tid = setTimeout(() => controller.abort(), timeout);
+        const start = performance.now();
+        try {
+            await fetch(url, { method: 'GET', mode: 'cors', signal: controller.signal });
+            const latency = Math.round(performance.now() - start);
+            clearTimeout(tid);
+            return latency;
+        } catch(e) {
+            clearTimeout(tid);
+            return null;
+        }
+    }
+
+    async function autoMeasureRawPings() {
+        if (resultsMaster.length === 0) return;
+        const total = resultsMaster.length;
+        let processed = 0;
+        const concurrencyPing = 8;
+        const queue = [...resultsMaster];
+        document.getElementById("scanStats").innerHTML = `🔄 Measuring TCP/HTTP pings (auto) on ${total} alive entries...`;
+        async function worker() {
+            while (queue.length) {
+                const r = queue.shift();
+                if (r.ip && r.ip !== "(DNS)") {
+                    let tcpLatency = await measureTcpPingAuto(r.ip, 80);
+                    if (!tcpLatency && r.bestPort && r.bestPort !== 80) {
+                        tcpLatency = await measureTcpPingAuto(r.ip, r.bestPort);
+                    }
+                    r.tcpPing = tcpLatency;
+                    const target = (r.sni && r.sni !== "(direct)" && r.sni !== "(DNS)") ? r.sni : r.ip;
+                    let httpLatency = null;
+                    if (target && target !== "(DNS)") {
+                        httpLatency = await measureHttpPingAuto(target);
+                    }
+                    r.httpPing = httpLatency;
+                }
+                processed++;
+                document.getElementById("scanStats").innerHTML = `🔄 Auto pings: ${processed}/${total} (TCP/HTTP)`;
+                scheduleRender();
+            }
+        }
+        const workers = Array(concurrencyPing).fill().map(() => worker());
+        await Promise.all(workers);
+        document.getElementById("scanStats").innerHTML = `✅ TCP/HTTP pings completed.`;
+        renderResultsTable();
+    }
+
+    async function prepareScan(mode = 'full') {
+        let ipRaw = document.getElementById("ipInput").value;
+        let sniRaw = document.getElementById("sniInput").value;
+        let ipList = extractIPs(ipRaw);
+        let sniList = extractSNIs(sniRaw);
+        if (ipList.length === 0) ipList = ["1.1.1.1", "8.8.8.8", "9.9.9.9"];
+        if (sniList.length === 0) sniList = [...ipList, ...FALLBACK_SNIS];
+        if (mode === 'pair_only') {
+            ipList = ipList.slice(0, 50);
+            sniList = sniList.slice(0, 50);
+        } else {
+            ipList = ipList.slice(0, 200);
+            sniList = sniList.slice(0, 200);
+        }
+        
+        taskQueue = [];
+        if (mode === 'full' || mode === 'direct_only') {
+            for (let sni of sniList) taskQueue.push({ type: 'direct_sni', sni });
+            for (let ip of ipList) taskQueue.push({ type: 'direct_ip', ip });
+        }
+        if (mode === 'full' || mode === 'pair_only') {
+            for (let ip of ipList) {
+                for (let sni of sniList) {
+                    taskQueue.push({ ip, sni });
+                }
+            }
+        }
+        if (asymmetricMode) {
+             taskQueue = await asymmetricScan(taskQueue);
+        }
+        resultsMaster = [];
+        rawAllResults = [];
+        currentTaskIndex = 0;
+        runningTasks = 0;
+        scanActive = true;
+        scanPaused = false;
+        scanStop = false;
+        let modeText = mode === 'full' ? 'Full' : (mode === 'direct_only' ? 'PING (Direct+TCP)' : 'PAIR (IP×SNI only)');
+        document.getElementById("scanStatusBadge").innerText = `🔄 Scanning (${modeText})`;
+        renderResultsTable();
+        runScanner();
+    }
+
+    async function runScanner() {
+        if (!scanActive || scanPaused || scanStop) return;
+        while (runningTasks < concurrency && currentTaskIndex < taskQueue.length && !scanPaused && !scanStop) {
+            const task = taskQueue[currentTaskIndex++];
+            runningTasks++;
+            updateProgress();
+            (async () => {
+                let entry = null;
+                if (task.type === 'direct_sni') {
+                    const ping = await pingDomain(task.sni);
+                    const alive = ping.success;
+                    const latency = alive ? ping.latency : -1;
+                    entry = {
+                        ip: "(DNS)", sni: task.sni, bestPort: 443, bestLatency: latency, alivePortsCount: alive?1:0,
+                        portsDetail: alive ? `direct ${latency}ms` : "❌", compatible: alive,
+                        cdn: "—", isp: "—", asn: "—", isIranian: false, speedMbps: null, realityReady: false,
+                        tcpPing: null, httpPing: alive ? latency : null
+                    };
+                } else if (task.type === 'direct_ip') {
+                    const httpResult = await pingIP(task.ip);
+                    const httpAlive = httpResult.success;
+                    const httpLatency = httpAlive ? httpResult.latency : -1;
+                    let tcpLatency = await tcpPingWithRetries(task.ip, 80);
+                    if (!tcpLatency) tcpLatency = await tcpPingWithRetries(task.ip, 443);
+                    entry = {
+                        ip: task.ip, sni: "(direct)", bestPort: 80, bestLatency: httpLatency, alivePortsCount: httpAlive?1:0,
+                        portsDetail: httpAlive ? `direct ${httpLatency}ms` : "❌", compatible: httpAlive,
+                        cdn: detectCDN(task.ip), isp: "—", asn: "—", isIranian: isIranianIP(task.ip), speedMbps: null, realityReady: false,
+                        tcpPing: tcpLatency, httpPing: httpAlive ? httpLatency : null
+                    };
+                } else if (task.ip && task.sni) {
+                    const portResult = await testPortsForPair(task.ip, task.sni, DEFAULT_PORTS);
+                    const alive = (portResult !== null);
+                    entry = {
+                        ip: task.ip, sni: task.sni, bestPort: alive ? portResult.bestPort : null,
+                        bestLatency: alive ? portResult.bestLatency : -1, alivePortsCount: alive ? portResult.alivePortsCount : 0,
+                        portsDetail: alive ? portResult.portsDetail : "❌ none", compatible: alive,
+                        cdn: detectCDN(task.ip), isp: "—", asn: "—", isIranian: isIranianIP(task.ip), speedMbps: null, realityReady: false,
+                        tcpPing: null, httpPing: null
+                    };
+                }
+                if (entry) {
+                    rawAllResults.push(entry);
+                    if (entry.compatible) resultsMaster.push(entry);
+                }
+                scheduleRender();
+                runningTasks--;
+                if (!scanPaused && !scanStop && currentTaskIndex < taskQueue.length) runScanner();
+                else if (currentTaskIndex >= taskQueue.length && runningTasks === 0) finishScan();
+            })();
+        }
+    }
+
+    function scheduleRender() {
+        if (renderTimeout) clearTimeout(renderTimeout);
+        renderTimeout = setTimeout(() => renderResultsTable(), 100);
+    }
+
+    function finishScan() { 
+        scanActive = false; 
+        document.getElementById("scanStatusBadge").innerText = "✅ Completed"; 
+        updateProgress(); 
+        renderResultsTable();
+        autoMeasureRawPings();
+    }
+
+    function updateProgress() {
+        const total = taskQueue.length;
+        const done = rawAllResults.length;
+        const percent = total ? (done/total)*100 : 0;
+        document.getElementById("scanProgressFill").style.width = `${percent}%`;
+        const aliveCount = resultsMaster.length;
+        document.getElementById("scanStats").innerHTML = `🧩 Scanned: ${done}/${total} | ✅ Alive: ${aliveCount}`;
+        document.getElementById("resultCountSpan").innerText = `${aliveCount} alive`;
+    }
+
+    function renderResultsTable() {
+        const filter = document.getElementById("filterInput").value.toLowerCase();
+        const aliveOnly = document.getElementById("aliveOnlyCheckbox").checked;
+        let data = aliveOnly ? resultsMaster : rawAllResults;
+        let filtered;
+        if (aliveOnly) {
+            filtered = data.filter(r => r.compatible && (r.ip.includes(filter) || r.sni.includes(filter) || (r.bestPort && String(r.bestPort).includes(filter))));
+        } else {
+            filtered = data.filter(r => r.ip.includes(filter) || r.sni.includes(filter) || (r.bestPort && String(r.bestPort).includes(filter)));
+        }
+        const tbody = document.getElementById("resultsTbody");
+        if(filtered.length === 0) { tbody.innerHTML = `<tr><td colspan="18">⚡ No entries (alive only: ${aliveOnly})</td></tr>`; return; }
+        tbody.innerHTML = filtered.map(r => {
+            const bestPort = r.bestPort || '—';
+            const httpsLatency = (r.bestLatency && r.bestLatency > 0) ? r.bestLatency+'ms' : '❌';
+            const httpPing = (r.httpPing && r.httpPing > 0) ? r.httpPing+'ms' : '—';
+            const tcpPing = (r.tcpPing && r.tcpPing > 0) ? r.tcpPing+'ms' : '—';
+            const speed = r.speedMbps ? r.speedMbps+' Mbps' : '—';
+            const alivePorts = r.alivePortsCount > 0 ? `${r.alivePortsCount}/20` : '☠️';
+            const portsDetailShort = (r.portsDetail || '').substring(0,20);
+            const cdn = r.cdn || '—';
+            const isp = r.isp || '—';
+            const asn = r.asn || '—';
+            const reality = r.realityReady ? '✅' : '❌';
+            const local = r.isIranian ? '🇮🇷' : '🌍';
+            const tlsVal = r.tlsTime ? r.tlsTime+'ms' : '—';
+            const udpVal = r.udpTime ? r.udpTime+'ms' : '—';
+            const spark = r.spark || '—';
+            const engine = r.engine || '—';
+            const spoof = r.spoof || '—';
+            return `
+                <tr>
+                    <td><code>${r.ip}</code></td>
+                    <td>${r.sni}</td>
+                    <td>${bestPort}</td>
+                    <td>${tlsVal}</td>
+                    <td>${httpPing}</td>
+                    <td>${tcpPing}</td>
+                    <td>${udpVal}</td>
+                    <td>${speed}</td>
+                    <td class="sparkline">${spark}</td>
+                    <td title="${r.portsDetail || ''}">${alivePorts}</td>
+                    <td>${cdn}</td>
+                    <td>${isp}</td>
+                    <td>${asn}</td>
+                    <td>${engine}</td>
+                    <td>${spoof}</td>
+                    <td>${reality}</td>
+                    <td>${local}</td>
+                    <td><button class="copyRowBtn" data-ip="${r.ip}" data-sni="${r.sni}" data-port="${r.bestPort || 443}">📋</button></td>
+                </tr>
+            `;
+        }).join('');
+        document.querySelectorAll('.copyRowBtn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const ip = btn.getAttribute('data-ip');
+                const sni = btn.getAttribute('data-sni');
+                const port = btn.getAttribute('data-port');
+                const link = `vless://${ip}:${port}?security=tls&sni=${encodeURIComponent(sni)}`;
+                navigator.clipboard.writeText(link);
+                btn.innerText = "✓";
+                setTimeout(() => btn.innerText = "📋", 1000);
+            });
+        });
+        updateProgress();
+    }
+    // ========== EXPORTS AND OTHER FUNCTIONS ==========
+    function exportCSV() { 
+        let rows = [["IP","SNI","Port","HTTPS","HTTP","TCP","Mbps","Ports","CDN","ISP","ASN","Real","IR"]];
+        resultsMaster.forEach(r => rows.push([r.ip, r.sni, r.bestPort||'', r.bestLatency>0?r.bestLatency:'', r.httpPing||'', r.tcpPing||'', r.speedMbps||'', r.alivePortsCount, r.cdn||'', r.isp||'', r.asn||'', r.realityReady?'Yes':'No', r.isIranian?'Yes':'No']));
+        downloadFile(rows.map(row=>row.join(",")).join("\n"), "hydrascan.csv","text/csv");
+    }
+    function exportTXT() { 
+        let lines = resultsMaster.map(r => `${r.ip}:${r.bestPort||'?'} [${r.sni}] HTTPS:${r.bestLatency}ms HTTP:${r.httpPing||'-'}ms TCP:${r.tcpPing||'-'}ms`);
+        downloadFile("# HydraScaner\n"+lines.join("\n"), "hydrascan.txt","text/plain");
+    }
+    function exportJSON() { downloadFile(JSON.stringify(resultsMaster,null,2), "hydrascan.json","application/json"); }
+    function exportClash() {
+        let proxies = resultsMaster.map(r => `  - name: "${r.ip}_${r.sni}"\n    type: vless\n    server: ${r.ip}\n    port: ${r.bestPort||443}\n    uuid: auto\n    flow: xtls-rprx-vision\n    udp: true\n    tls: true\n    servername: ${r.sni}\n    skip-cert-verify: true`);
+        let yaml = `proxies:\n${proxies.join("\n")}\nproxy-groups:\n  - name: "HydraGroup"\n    type: load-balance\n    proxies:\n${resultsMaster.map(r => `      - "${r.ip}_${r.sni}"`).join("\n")}\n    strategy: round-robin`;
+        downloadFile(yaml, "hydrascan_clash.yaml","text/yaml");
+    }
+    function exportSingbox() {
+        let outbounds = resultsMaster.map(r => ({ type: "vless", tag: `${r.ip}_${r.sni}`, server: r.ip, server_port: r.bestPort||443, tls: { enabled: true, server_name: r.sni, insecure: true } }));
+        let json = { outbounds };
+        downloadFile(JSON.stringify(json,null,2), "hydrascan_singbox.json","application/json");
+    }
+    function exportV2rayN() {
+        let v2rayConfig = { "servers": resultsMaster.map(r => ({ "address": r.ip, "port": r.bestPort||443, "sni": r.sni, "protocol": "vless", "security": "tls" })) };
+        downloadFile(JSON.stringify(v2rayConfig,null,2), "v2rayn_import.json","application/json");
+    }
+    function downloadFile(content,filename,mime) { let a=document.createElement('a'); let blob=new Blob([content],{type:mime}); a.href=URL.createObjectURL(blob); a.download=filename; a.click(); URL.revokeObjectURL(a.href); }
+    function copyAliveIPs() { let ips=[...new Set(resultsMaster.map(r=>r.ip))]; navigator.clipboard.writeText(ips.join("\n")); alert(`Copied ${ips.length} IPs`); }
+    function copyAliveSNIs() { let snis=[...new Set(resultsMaster.map(r=>r.sni))]; navigator.clipboard.writeText(snis.join("\n")); alert(`Copied ${snis.length} SNIs`); }
+
+    function parseConfig(line) {
+        try {
+            if(line.startsWith("vless://")) { let u=new URL(line); return { type:"vless", address: u.hostname, port: u.port||443, sni: u.searchParams.get("sni")||"" }; }
+            else if(line.startsWith("vmess://")) { let j=JSON.parse(atob(line.slice(8))); return { type:"vmess", address: j.add||j.host, port: j.port, sni: j.sni||j.host }; }
+            else if(line.startsWith("trojan://")) { let u=new URL(line); return { type:"trojan", address: u.hostname, port: u.port||443, sni: u.searchParams.get("sni")||"" }; }
+        } catch(e){ return null; }
+        return null;
+    }
+    function extractConfigs() { let raw=document.getElementById("rawConfigsInput").value; let configs=raw.split("\n").map(l=>parseConfig(l)).filter(c=>c); document.getElementById("configPreview").innerHTML=`<pre>🔍 ${configs.length} configs</pre>`; window._parsedConfigs = configs; return configs; }
+    async function optimizeConfigs() {
+        let configs = window._parsedConfigs || extractConfigs();
+        if(!configs.length) { alert("No configs"); return; }
+        if(resultsMaster.length === 0) { alert("No alive results"); return; }
+        let optimized = [];
+        for(let cfg of configs) {
+            let best = null;
+            for(let res of resultsMaster) {
+                let test = await testSingle(res.ip, cfg.sni || res.sni, 443);
+                if(test.success && (!best || test.latency < best.lat)) best = { ip: res.ip, sni: cfg.sni || res.sni, port: cfg.port, lat: test.latency };
+            }
+            if(best) optimized.push(`vless://${best.ip}:${best.port||443}?security=tls&sni=${encodeURIComponent(best.sni)}`);
+            else optimized.push(`# ${cfg.type} failed`);
+        }
+        document.getElementById("optimizedResults").innerHTML = `<div><strong>Optimized:</strong><br>${optimized.map(o=>`<code>${o}</code><br>`).join('')}<button id="copyOptBtn">Copy All</button></div>`;
+        document.getElementById("copyOptBtn")?.addEventListener("click",()=>navigator.clipboard.writeText(optimized.filter(l=>!l.startsWith('#')).join("\n")));
+        window._optLinks = optimized;
+    }
+    function buildLbConfig() {
+        if(resultsMaster.length === 0) { alert("No alive results."); return; }
+        let proxies = resultsMaster.map(r => `    - name: "${r.ip}_${r.sni}"\n      server: ${r.ip}\n      port: ${r.bestPort||443}\n      type: vless\n      sni: ${r.sni}\n      skip-cert-verify: true`);
+        let yaml = `proxy-groups:\n  - name: "HydraLB"\n    type: load-balance\n    proxies:\n${resultsMaster.map(r => `      - "${r.ip}_${r.sni}"`).join("\n")}\n    url: "http://www.gstatic.com/generate_204"\n    interval: 300\nproxies:\n${proxies.join("\n")}`;
+        downloadFile(yaml, "hydra_lb.yaml", "text/yaml");
+        alert("Load‑balancing Clash config generated.");
+    }
+    function initTheme() {
+        const saved = localStorage.getItem("theme");
+        if(saved) document.body.classList.toggle("light", saved === "light");
+        else if(window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) document.body.classList.add("light");
+    }
+    function toggleTheme() { document.body.classList.toggle("light"); localStorage.setItem("theme", document.body.classList.contains("light") ? "light" : "dark"); }
+    function pauseScan() { if(scanActive) scanPaused = true; document.getElementById("scanStatusBadge").innerText = "⏸ Paused"; }
+    function stopScan() { scanActive = false; scanStop = true; scanPaused = false; document.getElementById("scanStatusBadge").innerText = "⏹ Stopped"; }
+    async function enrichAllResults() {
+        if (resultsMaster.length === 0) { alert("No alive results. Run a scan first."); return; }
+        const total = resultsMaster.length;
+        let processed = 0;
+        const concurrencyEnrich = 10;
+        const queue = [...resultsMaster];
+        async function worker() {
+            while (queue.length) {
+                const r = queue.shift();
+                if (r.ip && r.ip !== "(DNS)") {
+                    const info = await enrichISP(r.ip);
+                    r.isp = info.isp;
+                    r.asn = info.asn;
+                    if (r.bestPort) {
+                        const realityOk = await testReality(r.ip, r.bestPort, r.sni);
+                        r.realityReady = realityOk;
+                    }
+                }
+                processed++;
+                document.getElementById("scanStats").innerHTML = `🧩 Enriching: ${processed}/${total} (ISP/ASN/Reality)`;
+                scheduleRender();
+            }
+        }
+        const workers = Array(concurrencyEnrich).fill().map(() => worker());
+        await Promise.all(workers);
+        alert("Enrichment completed.");
+        renderResultsTable();
+    }
+    async function measureSpeed(ip, port, timeout = 5000) {
+        const url = `https://${ip}:${port}/`;
+        const controller = new AbortController();
+        const tid = setTimeout(() => controller.abort(), timeout);
+        const start = performance.now();
+        try {
+            const response = await fetch(url, { mode: 'cors', signal: controller.signal });
+            const blob = await response.blob();
+            const bytes = blob.size;
+            const elapsed = performance.now() - start;
+            clearTimeout(tid);
+            const bitsPerSec = (bytes * 8) / (elapsed / 1000);
+            const mbps = bitsPerSec / 1e6;
+            return Math.round(mbps * 10) / 10;
+        } catch(e) {
+            clearTimeout(tid);
+            return null;
+        }
+    }
+    async function runSpeedTest() {
+        if(resultsMaster.length === 0) { alert("No alive results. Run a scan first."); return; }
+        for(let i=0;i<resultsMaster.length;i++) {
+            const r = resultsMaster[i];
+            if(r.bestPort) {
+                const speed = await measureSpeed(r.ip, r.bestPort);
+                r.speedMbps = speed !== null ? speed : "N/A";
+                scheduleRender();
+                await new Promise(r => setTimeout(r, 100));
+            }
+        }
+        alert("Speed test completed (approx).");
+    }
+    async function runRawPings() {
+        if (resultsMaster.length === 0) { alert("No alive results. Run a scan first."); return; }
+        const total = resultsMaster.length;
+        let processed = 0;
+        const concurrencyPing = 8;
+        const queue = [...resultsMaster];
+        document.getElementById("scanStats").innerHTML = `🕒 Manual raw pings (TCP/HTTP) on ${total} entries...`;
+        async function worker() {
+            while (queue.length) {
+                const r = queue.shift();
+                if (r.ip && r.ip !== "(DNS)") {
+                    let tcpLatency = await measureTcpPingAuto(r.ip, 80);
+                    if (!tcpLatency && r.bestPort && r.bestPort !== 80) {
+                        tcpLatency = await measureTcpPingAuto(r.ip, r.bestPort);
+                    }
+                    r.tcpPing = tcpLatency;
+                    const target = (r.sni && r.sni !== "(direct)" && r.sni !== "(DNS)") ? r.sni : r.ip;
+                    let httpLatency = null;
+                    if (target && target !== "(DNS)") {
+                        httpLatency = await measureHttpPingAuto(target);
+                    }
+                    r.httpPing = httpLatency;
+                }
+                processed++;
+                document.getElementById("scanStats").innerHTML = `🕒 Manual pings: ${processed}/${total}`;
+                scheduleRender();
+            }
+        }
+        const workers = Array(concurrencyPing).fill().map(() => worker());
+        await Promise.all(workers);
+        alert("Manual raw ping measurement completed.");
+        renderResultsTable();
+    }
+
+    // ========== EVENT BINDINGS ==========
+    document.getElementById("startScanBtn").onclick = () => prepareScan('full');
+    document.getElementById("pingOnlyBtn").onclick = () => prepareScan('direct_only');
+    document.getElementById("pairOnlyBtn").onclick = () => prepareScan('pair_only');
+    document.getElementById("pauseScanBtn").onclick = pauseScan;
+    document.getElementById("stopScanBtn").onclick = stopScan;
+    document.getElementById("exportCsvBtn").onclick = exportCSV;
+    document.getElementById("exportTxtBtn").onclick = exportTXT;
+    document.getElementById("exportJsonBtn").onclick = exportJSON;
+    document.getElementById("exportClashBtn").onclick = exportClash;
+    document.getElementById("exportSingboxBtn").onclick = exportSingbox;
+    document.getElementById("exportV2rayNBtn").onclick = exportV2rayN;
+    document.getElementById("copyAliveIpsBtn").onclick = copyAliveIPs;
+    document.getElementById("copyAliveSnisBtn").onclick = copyAliveSNIs;
+    document.getElementById("filterInput").addEventListener("input", () => renderResultsTable());
+    document.getElementById("aliveOnlyCheckbox").addEventListener("change", () => renderResultsTable());
+    document.getElementById("extractConfigBtn").onclick = extractConfigs;
+    document.getElementById("optimizeConfigsBtn").onclick = optimizeConfigs;
+    document.getElementById("copyAllOptimizedBtn").onclick = () => { if(window._optLinks) navigator.clipboard.writeText(window._optLinks.filter(l=>!l.startsWith('#')).join("\n")); else alert("No optimized configs"); };
+    document.getElementById("buildLbConfigBtn").onclick = buildLbConfig;
+    document.getElementById("speedTestBtn").onclick = runSpeedTest;
+    document.getElementById("enrichBtn").onclick = enrichAllResults;
+    document.getElementById("rawPingBtn").onclick = runRawPings;
+    document.getElementById("themeToggleBtn").onclick = toggleTheme;
+
+    const header = document.getElementById("configAccordionHeader");
+    const content = document.getElementById("configAccordionContent");
+    header.addEventListener("click", () => {
+        const isOpen = content.style.maxHeight && content.style.maxHeight !== "0px";
+        content.style.maxHeight = isOpen ? "0px" : content.scrollHeight + "px";
+        header.querySelector("span:last-child").innerHTML = isOpen ? "▼" : "▲";
+    });
+    content.style.maxHeight = "0px";
+    initTheme();
+    // ========== 20 ADVANCED FEATURES ==========
+    
+    // Feature 1: TLS handshake time
+    async function tlsHandshakeTime(ip, port = 443) {
+        const url = `https://${ip}:${port}/`;
+        const start = performance.now();
+        const controller = new AbortController();
+        const timeout = setTimeout(() => controller.abort(), 2000);
+        try {
+            await fetch(url, { method: 'HEAD', mode: 'no-cors', signal: controller.signal });
+            const entries = performance.getEntriesByName(url);
+            let tlsTime = null;
+            if (entries.length && entries[0].nextHopProtocol) {
+                const timing = entries[0];
+                if (timing.secureConnectionStart > 0) {
+                    tlsTime = timing.connectEnd - timing.secureConnectionStart;
+                }
+            }
+            clearTimeout(timeout);
+            return tlsTime ? Math.round(tlsTime) : null;
+        } catch(e) {
+            clearTimeout(timeout);
+            return null;
+        }
+    }
+    
+    // Feature 2: Neighbourhood scan (expand IP to /24, test best 10)
+    async function neighbourhoodScan(ip, sni, basePort = 443) {
+        const parts = ip.split('.');
+        if (parts.length !== 4) return [];
+        const prefix = parts.slice(0,3).join('.');
+        const candidates = [];
+        for (let i = 1; i <= 254; i++) {
+            candidates.push(`${prefix}.${i}`);
+        }
+        const shuffled = candidates.sort(() => 0.5 - Math.random());
+        const toTest = shuffled.slice(0, 10);
+        const results = [];
+        for (const testIp of toTest) {
+            const latency = await measureTcpPing(testIp, basePort);
+            if (latency) results.push({ ip: testIp, latency });
+        }
+        results.sort((a,b) => a.latency - b.latency);
+        return results.slice(0,3);
+    }
+    
+    // Feature 3: Stability sparkline
+    let latencyHistory = new Map();
+    function updateSparkline(ip, sni, latency) {
+        const key = `${ip}|${sni}`;
+        if (!latencyHistory.has(key)) latencyHistory.set(key, []);
+        let arr = latencyHistory.get(key);
+        arr.push(latency);
+        if (arr.length > 10) arr.shift();
+        const spark = arr.map(l => l < 100 ? '🟢' : (l < 300 ? '🟡' : '🔴')).join('');
+        return spark || '—';
+    }
+    
+    // Feature 4: Presets
+    function sortByGaming() { resultsMaster.sort((a,b) => (a.tcpPing||999) - (b.tcpPing||999)); renderResultsTable(); }
+    function sortByStreaming() { resultsMaster.sort((a,b) => (b.speedMbps||0) - (a.speedMbps||0)); renderResultsTable(); }
+    function sortByBrowsing() { resultsMaster.sort((a,b) => (a.bestLatency||999) - (b.bestLatency||999)); renderResultsTable(); }
+    
+    // Feature 5: Config injector
+    async function configInjector() {
+        let raw = document.getElementById("rawConfigsInput").value;
+        let lines = raw.split("\n");
+        let newConfigs = [];
+        for (let line of lines) {
+            let cfg = parseConfig(line);
+            if (cfg && resultsMaster.length) {
+                let best = resultsMaster.reduce((a,b) => (a.bestLatency < b.bestLatency ? a : b));
+                let newLink = `vless://${best.ip}:${best.bestPort||443}?security=tls&sni=${encodeURIComponent(best.sni)}`;
+                newConfigs.push(newLink);
+            } else {
+                newConfigs.push(line);
+            }
+        }
+        document.getElementById("rawConfigsInput").value = newConfigs.join("\n");
+        alert("Configs upgraded with fastest alive IP/SNI.");
+    }
+    
+    // Feature 6: Natural language AI
+    function naturalLanguageQuery(query) {
+        const q = query.toLowerCase();
+        let targetType = null;
+        let maxLatency = 300;
+        if (q.includes("gaming") || q.includes("fast")) targetType = "tcp";
+        else if (q.includes("stream") || q.includes("video")) targetType = "mbps";
+        else if (q.includes("browsing")) targetType = "http";
+        if (q.includes("below 100")) maxLatency = 100;
+        else if (q.includes("below 200")) maxLatency = 200;
+        let filtered = resultsMaster.filter(r => r.bestLatency < maxLatency);
+        if (targetType === "tcp") filtered.sort((a,b) => (a.tcpPing||999) - (b.tcpPing||999));
+        else if (targetType === "mbps") filtered.sort((a,b) => (b.speedMbps||0) - (a.speedMbps||0));
+        else filtered.sort((a,b) => a.bestLatency - b.bestLatency);
+        if (filtered.length) {
+            alert(`Best match: ${filtered[0].ip}:${filtered[0].bestPort} (${filtered[0].bestLatency}ms)`);
+        } else alert("No suitable proxy found.");
+    }
+    
+    // Feature 7: Stealth mode
+    let stealthEnabled = false;
+    async function stealthRequest(url) {
+        if (stealthEnabled) {
+            await new Promise(r => setTimeout(r, Math.random() * 500 + 100));
+            fetch('https://aparat.com/favicon.ico', { mode: 'no-cors' }).catch(()=>{});
+            fetch('https://digikala.com/favicon.ico', { mode: 'no-cors' }).catch(()=>{});
+        }
+        return fetch(url);
+    }
+    
+    // Feature 8: Port knocking detection
+    async function portKnocking(ip) {
+        const ports = [80, 443, 8080];
+        let openPort = null;
+        for (let p of ports) {
+            const res = await testSingle(ip, "none", p, 1000);
+            if (res.success) { openPort = p; break; }
+        }
+        if (openPort && openPort === 8080) return 8443;
+        return null;
+    }
+    
+    // Feature 9: Latency heatmap over time
+    function saveHeatmap(ip, sni, latency) {
+        let heat = JSON.parse(localStorage.getItem("heatmap") || "{}");
+        const key = `${ip}|${sni}`;
+        if (!heat[key]) heat[key] = [];
+        heat[key].push({ time: Date.now(), latency });
+        if (heat[key].length > 100) heat[key].shift();
+        localStorage.setItem("heatmap", JSON.stringify(heat));
+    }
+    function getHeatmapSpark(ip, sni) {
+        const heat = JSON.parse(localStorage.getItem("heatmap") || "{}");
+        const key = `${ip}|${sni}`;
+        const arr = heat[key] || [];
+        if (arr.length === 0) return "—";
+        const recent = arr.slice(-5);
+        const trend = recent.map(r => r.latency < 100 ? '🟢' : (r.latency < 300 ? '🟡' : '🔴')).join('');
+        return trend;
+    }
+    
+    // Feature 10: Config war room
+    let warRoomInterval = null;
+    function warRoom(selectedIndices) {
+        const panel = document.getElementById("warRoomPanel");
+        panel.style.display = "block";
+        if (warRoomInterval) clearInterval(warRoomInterval);
+        const update = async () => {
+            let html = "<div class='flex-row'><strong>Live comparison (updates every 30s)</strong></div>";
+            for (let idx of selectedIndices) {
+                const r = resultsMaster[idx];
+                const newLatency = await testSingle(r.ip, r.sni, r.bestPort, 2000);
+                r.bestLatency = newLatency.success ? newLatency.latency : -1;
+                html += `<div class="war-room-row">
+                            <div class="war-room-item">${r.ip}:${r.bestPort}</div>
+                            <div class="war-room-item">Latency: ${r.bestLatency}ms</div>
+                            <div class="war-room-item">Mbps: ${r.speedMbps || '—'}</div>
+                         </div>`;
+            }
+            panel.innerHTML = html;
+            renderResultsTable();
+        };
+        update();
+        warRoomInterval = setInterval(update, 30000);
+    }
+    
+    // Feature 11: UDP latency via WebRTC STUN
+    async function udpLatency(ip) {
+        const pc = new RTCPeerConnection({ iceServers: [{ urls: `stun:${ip}:3478` }] });
+        const start = performance.now();
+        let resolved = false;
+        const timeout = setTimeout(() => { if (!resolved) pc.close(); }, 2000);
+        return new Promise((resolve) => {
+            pc.createDataChannel("ping");
+            pc.createOffer().then(offer => pc.setLocalDescription(offer)).catch(()=>{});
+            pc.onicecandidate = (event) => {
+                if (event.candidate && !resolved) {
+                    const latency = Math.round(performance.now() - start);
+                    resolved = true;
+                    clearTimeout(timeout);
+                    pc.close();
+                    resolve(latency);
+                }
+            };
+            setTimeout(() => { if (!resolved) resolve(null); }, timeout);
+        });
+    }
+    
+    // Feature 12: Chain scanner (simplified)
+    async function chainScan(proxyIp, proxyPort, targetIp) {
+        return await testSingle(targetIp, "chain", 443);
+    }
+    
+    // Feature 13: Geo‑spoofing detector
+    function expectedLatency(ip) {
+        return (ip.startsWith("185.") || ip.startsWith("94.")) ? 40 : 150;
+    }
+    function detectSpoof(ip, actualLatency) {
+        const expected = expectedLatency(ip);
+        if (actualLatency < 10 && expected > 30) return "⚠️ Spoof";
+        return "—";
+    }
+    
+    // Feature 14: Port blacklist/whitelist
+    let portBlacklist = [];
+    function applyPortFilter(ports) {
+        if (portBlacklist.length) return ports.filter(p => !portBlacklist.includes(p));
+        return ports;
+    }
+    
+    // Feature 15: DNS over HTTPS resolver
+    async function dohResolve(domain) {
+        const url = `https://cloudflare-dns.com/dns-query?name=${domain}&type=A`;
+        const res = await fetch(url, { headers: { "Accept": "application/dns-json" } });
+        const data = await res.json();
+        return data.Answer?.filter(a => a.type === 1).map(a => a.data) || [];
+    }
+    
+    // Feature 16: Config fingerprinting
+    async function fingerprintEngine(ip, port) {
+        try {
+            const res = await fetch(`https://${ip}:${port}/`, { method: 'HEAD', mode: 'cors' });
+            const server = res.headers.get('server') || "";
+            if (server.includes("cloudflare")) return "Cloudflare";
+            if (server.includes("nginx")) return "Nginx";
+            if (server.includes("Xray")) return "Xray";
+            return "Unknown";
+        } catch(e) { return "—"; }
+    }
+    
+    // Feature 17: Progressive speed test
+    async function progressiveSpeedTest(targetMbps = 50) {
+        let count = 0;
+        for (let r of resultsMaster) {
+            if (count >= 3) break;
+            if (r.bestPort) {
+                const speed = await measureSpeed(r.ip, r.bestPort);
+                r.speedMbps = speed !== null ? speed : "N/A";
+                if (speed > targetMbps) count++;
+                scheduleRender();
+                await new Promise(r => setTimeout(r, 100));
+            }
+        }
+        alert(`Progressive speed test done. Found ${count} fast proxies > ${targetMbps} Mbps.`);
+    }
+    
+    // Feature 18: Config merger
+    function buildClashGroup(selectedRows) {
+        let proxies = selectedRows.map(r => `  - name: "${r.ip}_${r.sni}"\n    type: vless\n    server: ${r.ip}\n    port: ${r.bestPort||443}\n    uuid: auto\n    flow: xtls-rprx-vision\n    udp: true\n    tls: true\n    servername: ${r.sni}\n    skip-cert-verify: true`);
+        let yaml = `proxies:\n${proxies.join("\n")}\nproxy-groups:\n  - name: "HydraGroup"\n    type: load-balance\n    proxies:\n${selectedRows.map(r => `      - "${r.ip}_${r.sni}"`).join("\n")}\n    strategy: round-robin`;
+        downloadFile(yaml, "merged_clash.yaml", "text/yaml");
+    }
+    
+    // Feature 19: GitHub Gist backup/restore
+    async function backupToGist(gistToken) {
+        const content = JSON.stringify(resultsMaster, null, 2);
+        const response = await fetch("https://api.github.com/gists", {
+            method: "POST",
+            headers: { "Authorization": `token ${gistToken}`, "Content-Type": "application/json" },
+            body: JSON.stringify({ files: { "hydrascan_backup.json": { content } }, public: false })
+        });
+        const data = await response.json();
+        alert(`Backup saved: ${data.html_url}`);
+    }
+    
+    // Feature 20: Asymmetric scan
+    let asymmetricMode = false;
+    async function asymmetricScan(queue) {
+        if (!asymmetricMode) return queue;
+        queue.sort((a,b) => {
+            const latA = resultsMaster.find(r => r.ip === a.ip && r.sni === a.sni)?.bestLatency || 999;
+            const latB = resultsMaster.find(r => r.ip === b.ip && r.sni === b.sni)?.bestLatency || 999;
+            return latA - latB;
+        });
+        return queue;
+    }
+    
+    // ========== ADVANCED PING BUTTON HANDLER ==========
+async function advancedPingScan() {
+    let ipRaw = document.getElementById("ipInput").value;
+    let sniRaw = document.getElementById("sniInput").value;
+    let ipList = extractIPs(ipRaw);
+    let sniList = extractSNIs(sniRaw);
+    if (ipList.length === 0) ipList = ["1.1.1.1", "8.8.8.8", "9.9.9.9"];
+    if (sniList.length === 0) sniList = [...ipList, ...FALLBACK_SNIS];
+    ipList = ipList.slice(0, 200);
+    sniList = sniList.slice(0, 200);
+    
+    taskQueue = [];
+    for (let sni of sniList) taskQueue.push({ type: 'direct_sni', sni });
+    for (let ip of ipList) taskQueue.push({ type: 'direct_ip', ip });
+    
+    // === NEIGHBOURHOOD SCAN ADDED ===
+    for (let ip of ipList) {
+        const neighbours = await neighbourhoodScan(ip, "none");
+        for (let n of neighbours) {
+            taskQueue.push({ type: 'direct_ip', ip: n.ip });
+        }
+    }
+if (asymmetricMode) {
+    taskQueue = await asymmetricScan(taskQueue);
+}
+    resultsMaster = [];
+    rawAllResults = [];
+    currentTaskIndex = 0;
+    runningTasks = 0;
+    scanActive = true;
+    scanPaused = false;
+    scanStop = false;
+    document.getElementById("scanStatusBadge").innerText = `🔄 Advanced Scan (20 features)`;
+    renderResultsTable();
+    runScanner();
+    
+    const interval = setInterval(async () => {
+        if (!scanActive && resultsMaster.length) {
+            clearInterval(interval);
+            for (let r of resultsMaster) {
+                if (r.ip && r.ip !== "(DNS)") {
+                    try {
+                        r.tlsTime = await tlsHandshakeTime(r.ip, r.bestPort || 443);
+                        r.udpTime = await udpLatency(r.ip);
+                        r.spark = updateSparkline(r.ip, r.sni, r.bestLatency);
+                        r.engine = await fingerprintEngine(r.ip, r.bestPort || 443);
+                        r.spoof = detectSpoof(r.ip, r.bestLatency);
+                        saveHeatmap(r.ip, r.sni, r.bestLatency);
+                    } catch(e) { console.warn(e); }
+                }
+            }
+            renderResultsTable();
+        }
+    }, 1000);
+}
+    
+    // ========== ADDITIONAL UI ELEMENTS FOR FEATURES ==========
+    document.getElementById("advancedPingBtn").onclick = advancedPingScan;
+    document.getElementById("configInjectorBtn").onclick = configInjector;
+    document.getElementById("naturalLanguageBtn").onclick = () => {
+        let q = prompt("Describe what you need (e.g., 'fast proxy for gaming below 100ms')");
+        if (q) naturalLanguageQuery(q);
+    };
+    document.getElementById("stealthModeBtn").onclick = () => {
+        stealthEnabled = !stealthEnabled;
+        alert(`Stealth mode ${stealthEnabled ? "ON" : "OFF"}`);
+    };
+    document.getElementById("asymmetricBtn").onclick = () => {
+        asymmetricMode = !asymmetricMode;
+        alert(`Asymmetric scan ${asymmetricMode ? "enabled" : "disabled"}`);
+    };
+    document.getElementById("portBlacklistBtn").onclick = () => {
+        let ports = prompt("Enter ports to blacklist (comma separated)", "80,8080");
+        if (ports) portBlacklist = ports.split(',').map(p => parseInt(p.trim()));
+        alert(`Port blacklist set: ${portBlacklist.join(', ')}`);
+    };
+    document.getElementById("warRoomBtn").onclick = () => {
+        let indices = [];
+        for (let i=0; i<resultsMaster.length; i++) {
+            if (confirm(`Add ${resultsMaster[i].ip} to war room?`)) indices.push(i);
+            if (indices.length >= 4) break;
+        }
+        warRoom(indices);
+    };
+    document.getElementById("backupGistBtn").onclick = async () => {
+        let token = prompt("GitHub personal access token (needs 'gist' scope)");
+        if (token) await backupToGist(token);
+    };
+    document.getElementById("restoreGistBtn").onclick = async () => {
+        let url = prompt("Paste Gist raw URL");
+        if (url) {
+            let res = await fetch(url);
+            let data = await res.json();
+            resultsMaster = data;
+            renderResultsTable();
+            alert("Restored from Gist");
+        }
+    };
+    
+    // Add preset buttons dynamically
+    const presetDiv = document.createElement("div");
+    presetDiv.className = "flex-row";
+    presetDiv.style.marginTop = "1rem";
+    presetDiv.innerHTML = `<span>🎮 Quick presets:</span>
+        <button id="presetGaming">Gaming (low TCP)</button>
+        <button id="presetStreaming">Streaming (high Mbps)</button>
+        <button id="presetBrowsing">Browsing (low HTTPS)</button>`;
+    document.querySelector("#resultsTable").parentElement.appendChild(presetDiv);
+    document.getElementById("presetGaming").onclick = sortByGaming;
+    document.getElementById("presetStreaming").onclick = sortByStreaming;
+    document.getElementById("presetBrowsing").onclick = sortByBrowsing;
+    
+    // Add config merger (checkbox selection)
+    const mergerDiv = document.createElement("div");
+    mergerDiv.className = "flex-row";
+    mergerDiv.style.marginTop = "0.5rem";
+    mergerDiv.innerHTML = `<span>📦 Config merger:</span>
+        <button id="mergeSelectedBtn">Merge selected into Clash</button>`;
+    document.querySelector("#resultsTable").parentElement.appendChild(mergerDiv);
+    document.getElementById("mergeSelectedBtn").onclick = () => {
+        let selected = [];
+        let checkboxes = document.querySelectorAll('.rowCheckbox');
+        checkboxes.forEach((cb, idx) => {
+            if (cb.checked) selected.push(resultsMaster[idx]);
+        });
+        if (selected.length) buildClashGroup(selected);
+        else alert("No rows selected");
+    };
+    
+    // Add checkboxes to each row
+    const originalRender = renderResultsTable;
+    window.renderResultsTable = function() {
+        originalRender();
+        const tbody = document.getElementById("resultsTbody");
+        const rows = tbody.querySelectorAll("tr");
+        rows.forEach((row, idx) => {
+            if (!row.querySelector(".rowCheckbox")) {
+                const cb = document.createElement("input");
+                cb.type = "checkbox";
+                cb.className = "rowCheckbox";
+                cb.style.margin = "0 0.5rem";
+                row.insertCell(0).appendChild(cb);
+            }
+        });
+    };
+    
+    // Progressive speed test button
+    const progBtn = document.createElement("button");
+    progBtn.textContent = "⚡ Progressive speed test (50 Mbps)";
+    progBtn.className = "btn-outline";
+    progBtn.onclick = () => progressiveSpeedTest(50);
+    document.querySelector("#speedTestBtn").parentElement.appendChild(progBtn);
+    
+    // DNS over HTTPS resolver button
+    const dohBtn = document.createElement("button");
+    dohBtn.textContent = "🔍 Resolve SNIs (DoH)";
+    dohBtn.className = "btn-outline";
+    dohBtn.onclick = async () => {
+        let sniList = extractSNIs(document.getElementById("sniInput").value);
+        for (let sni of sniList) {
+            let ips = await dohResolve(sni);
+            if (ips.length) alert(`${sni} → ${ips.join(', ')}`);
+        }
+    };
+    document.querySelector("#exportV2rayNBtn").parentElement.appendChild(dohBtn);
+</script>
+</body>
+</html>
