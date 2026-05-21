@@ -4,6 +4,8 @@
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 [![Made with ❤️](https://img.shields.io/badge/made%20with-%E2%9D%A4%EF%B8%8F-red)](https://github.com/iAmINRaZ)
 [![Offline Ready](https://img.shields.io/badge/offline-ready-success)](https://github.com/iAmINRaZ/HydraScaner)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/iAmINRaZ/HydraScaner)
+![GitHub stars](https://img.shields.io/github/stars/iAmINRaZ/HydraScaner?style=social)
 
 **HydraScaner** is a **browser‑based, offline‑capable** scanner that tests IPs, IP ranges, SNIs, domains, and CDNs with **20+ advanced features** – including multi‑port scanning, raw TCP/HTTP/HTTPS ping, UDP latency (via WebRTC), TLS handshake time, config injection, port knocking, geo‑spoof detection, and **automatic Clash / Sing‑Box / V2RayN config generation**.  
 
