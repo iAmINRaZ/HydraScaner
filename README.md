@@ -107,16 +107,6 @@ Columns include:
 
 ---
 
-## 📁 Repository Structure
-HydraScaner/
-├── hydrascan_ultimate.html # Single‑file application
-├── README.md # This file
-└── LICENSE # MIT License
-
-text
-
----
-
 ## 🤝 Contributing & Support
 
 - Found a bug? [Open an issue](https://github.com/iAmINRaZ/HydraScaner/issues)  
@@ -128,15 +118,6 @@ text
 ## 📜 License
 
 MIT License – free for personal and commercial use.  
-
----
-
-## 🌐 Live Demo
-
-You can try a **hosted version** (if you enable GitHub Pages):  
-1. Go to repo **Settings → Pages**  
-2. Set branch to `main` and folder to `/ (root)`  
-3. Access `https://iAmINRaZ.github.io/HydraScaner/hydrascaner.html`
 
 ---
 
