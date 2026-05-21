@@ -1,6 +1,6 @@
 # 🐉 HydraScaner · The Ultimate Scaner
 
-[![GitHub release](https://img.shields.io/badge/version-2.0-brightgreen)](https://github.com/iAmINRaZ/HydraScaner)
+[![GitHub release](https://img.shields.io/badge/version-1.0-brightgreen)](https://github.com/iAmINRaZ/HydraScaner)
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 [![Made with ❤️](https://img.shields.io/badge/made%20with-%E2%9D%A4%EF%B8%8F-red)](https://github.com/iAmINRaZ)
 [![Offline Ready](https://img.shields.io/badge/offline-ready-success)](https://github.com/iAmINRaZ/HydraScaner)
